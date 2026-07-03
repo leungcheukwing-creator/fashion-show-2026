@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b1220" />
+  <title>HKDI Fashion Show 2026 Mobile Seat Manager</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>HKDI Seat Manager</h1>
+      <p>Mobile Show Day Edition</p>
+    </div>
+    <button id="btnShowStats" class="icon-btn">Stats</button>
+  </header>
+
+  <div class="mobile-search">
+    <input id="searchInput" placeholder="Search guest / company / seat" />
+    <button id="btnClearSearch">×</button>
+  </div>
+  <div id="searchResults" class="search-results"></div>
+
+  <nav class="quickbar">
+    <button data-filter="all" class="active">All</button>
+    <button data-filter="vvvip">VVVIP</button>
+    <button data-filter="vvip">VVIP</button>
+    <button data-filter="vip">VIP</button>
+    <button data-filter="judge">Judge</button>
+    <button data-filter="checked">Arrived</button>
+    <button data-filter="blocked">Blocked</button>
+  </nav>
+
+  <main class="main">
+    <div class="map-toolbar">
+      <button id="zoomOut">−</button>
+      <span id="zoomLabel">100%</span>
+      <button id="zoomIn">+</button>
+      <button id="btnFit">Fit</button>
+      <button id="modeMove">Move</button>
+      <button id="modeAdd">Add</button>
+    </div>
+
+    <div id="mapScroller" class="map-scroller">
+      <div id="map" class="map">
+        <img src="assets/floorplan-8.jpg" alt="Floorplan" />
+        <div id="seatLayer" class="seat-layer"></div>
+      </div>
+    </div>
+  </main>
+
+  <section id="bottomSheet" class="bottom-sheet" aria-live="polite">
+    <div class="sheet-handle"></div>
+    <div id="sheetEmpty" class="sheet-empty">點擊座位開始編位</div>
+    <form id="seatForm" class="seat-form hidden">
+      <div class="sheet-head">
+        <div>
+          <div class="seat-title" id="seatTitle">Seat</div>
+          <div class="seat-sub" id="seatSub">Empty</div>
+        </div>
+        <button type="button" id="btnCloseSheet" class="icon-btn">Close</button>
+      </div>
+
+      <div class="photo-row">
+        <div id="photoPreview" class="photo-preview">Photo</div>
+        <label class="upload-btn">📷 Photo / Camera<input id="photo" type="file" accept="image/*" capture="environment" hidden /></label>
+      </div>
+
+      <div class="form-grid">
+        <label>Guest Name<input id="guestName" placeholder="例如 Eric Ng" /></label>
+        <label>Company<input id="company" placeholder="Company / Team" /></label>
+        <label>Category
+          <select id="category">
+            <option value="empty">Empty</option>
+            <option value="guest">Guest</option>
+            <option value="vip">VIP</option>
+            <option value="vvip">VVIP</option>
+            <option value="vvvip">VVVIP</option>
+            <option value="judge">Judge</option>
+            <option value="checked">Checked-in</option>
+            <option value="blocked">Blocked</option>
+          </select>
+        </label>
+        <label>Remarks<textarea id="remarks" rows="2" placeholder="Seat together / Parking / Notes"></textarea></label>
+      </div>
+      <div class="action-row">
+        <button type="button" id="btnCheckIn" class="checkin">✓ Check-in</button>
+        <button type="submit" class="save">Save</button>
+        <button type="button" id="btnClearSeat" class="clear">Clear</button>
+      </div>
+    </form>
+  </section>
+
+  <section id="statsPanel" class="stats-panel hidden">
+    <div class="stats-card">
+      <div class="stats-head"><h2>Show Day Summary</h2><button id="btnCloseStats">Close</button></div>
+      <div id="summary" class="summary"></div>
+      <div class="backup-actions">
+        <button id="btnExport">Export Backup JSON</button>
+        <label>Import Backup JSON<input id="importJson" type="file" accept="application/json" hidden /></label>
+        <button id="btnPrint">Print Seat Map</button>
+      </div>
+      <p class="note">資料儲存在此手機／瀏覽器。轉用另一部電話前，請先 Export JSON。</p>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
